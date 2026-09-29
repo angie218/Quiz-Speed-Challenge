@@ -1,0 +1,579 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+/* =========================
+   FAKE TODO INTRO SCREEN
+   ========================= */
+
+.intro-page,
+.joke-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 36px);
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(95, 91, 255, 0.35),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(190, 83, 255, 0.28),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #070b18, #11172b);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.fake-todo-card {
+  width: min(100%, 600px);
+  padding: clamp(24px, 5vw, 42px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: clamp(20px, 4vw, 28px);
+  background: rgba(20, 27, 51, 0.85);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  animation: intro-card-enter 0.7s ease;
+}
+
+.todo-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 3vw, 18px);
+}
+
+.todo-icon {
+  flex-shrink: 0;
+  width: clamp(48px, 8vw, 58px);
+  height: clamp(48px, 8vw, 58px);
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #6157ff, #a855f7);
+  font-size: clamp(24px, 5vw, 30px);
+  font-weight: 800;
+  box-shadow: 0 12px 30px rgba(108, 99, 255, 0.4);
+}
+
+.todo-label {
+  margin: 0 0 5px;
+  color: #aeb7d8;
+  font-size: clamp(11px, 2.5vw, 13px);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.todo-header h1 {
+  margin: 0;
+  font-size: clamp(30px, 7vw, 48px);
+  line-height: 1.05;
+}
+
+.todo-subtitle {
+  margin: clamp(18px, 4vw, 24px) 0
+    clamp(22px, 5vw, 30px);
+  color: #b8c0df;
+  font-size: clamp(14px, 3vw, 16px);
+  line-height: 1.7;
+}
+
+.todo-list {
+  display: grid;
+  gap: clamp(10px, 2.5vw, 14px);
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: clamp(14px, 3vw, 17px)
+    clamp(14px, 3vw, 18px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  color: #f4f6ff;
+  font-size: clamp(13px, 3vw, 16px);
+  cursor: default;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.todo-item:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.todo-item input {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  margin: 0;
+  accent-color: #8b5cf6;
+}
+
+.todo-item.completed {
+  color: #8f99bb;
+  text-decoration: line-through;
+}
+
+.start-intro-button {
+  width: 100%;
+  margin-top: clamp(24px, 5vw, 32px);
+  padding: 17px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #6157ff, #a855f7);
+  color: white;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 14px 35px rgba(108, 99, 255, 0.35);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.start-intro-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(108, 99, 255, 0.5);
+}
+
+.start-intro-button:active {
+  transform: translateY(0);
+}
+
+.start-intro-button span {
+  font-size: 22px;
+  transition: transform 0.2s ease;
+}
+
+.start-intro-button:hover span {
+  transform: translateX(5px);
+}
+
+/* =========================
+   JOKE SCREEN
+   ========================= */
+
+.joke-content {
+  width: min(100%, 800px);
+  padding: 20px;
+  text-align: center;
+  animation: joke-enter 0.65s ease;
+}
+
+.joke-emoji {
+  font-size: clamp(54px, 12vw, 72px);
+  animation: emoji-bounce 0.9s ease infinite alternate;
+}
+
+.joke-small-text {
+  margin: 18px 0 6px;
+  color: #aab3d5;
+  font-size: clamp(12px, 3vw, 14px);
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.joke-content h1 {
+  margin: 5px 0 12px;
+  font-size: clamp(38px, 10vw, 78px);
+  line-height: 1.05;
+  overflow-wrap: break-word;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #c4b5fd,
+    #a855f7
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.joke-content > p:not(.joke-small-text) {
+  margin: 0;
+  color: #bdc5e0;
+  font-size: clamp(15px, 3.5vw, 18px);
+}
+
+.loading-container {
+  width: min(360px, 82vw);
+  height: 8px;
+  margin: 34px auto 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.loading-bar {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #6157ff,
+    #a855f7,
+    #d8b4fe
+  );
+  transform-origin: left;
+  animation: load-real-project 4s linear forwards;
+}
+
+.loading-text {
+  color: #8f99bb;
+  font-size: 14px;
+}
+
+/* =========================
+   QUIZ SCREENS
+   ========================= */
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(16px, 4vw, 36px);
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(92, 103, 255, 0.18),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(168, 85, 247, 0.1),
+      transparent 35%
+    ),
+    #f4f6f8;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.card {
+  width: min(100%, 650px);
+  padding: clamp(22px, 5vw, 32px);
+  border-radius: clamp(16px, 3vw, 18px);
+  background: white;
+  box-shadow: 0 15px 40px rgba(22, 29, 60, 0.12);
+  text-align: center;
+}
+
+.card h1 {
+  margin-top: 0;
+  color: #151a2e;
+  font-size: clamp(30px, 7vw, 46px);
+}
+
+.card h2 {
+  color: #242a42;
+  font-size: clamp(20px, 4.5vw, 28px);
+}
+
+.card p {
+  color: #626b85;
+  font-size: clamp(14px, 3vw, 16px);
+  line-height: 1.6;
+}
+
+.card input {
+  width: 100%;
+  padding: 14px;
+  margin: 20px 0;
+  border: 1px solid #d3d7e3;
+  border-radius: 10px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card input:focus {
+  border-color: #675cff;
+  box-shadow: 0 0 0 4px rgba(103, 92, 255, 0.12);
+}
+
+.card > button {
+  padding: 13px 24px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6157ff, #8957ff);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card > button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(97, 87, 255, 0.28);
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  color: #68708a;
+  font-size: clamp(13px, 3vw, 16px);
+  font-weight: 700;
+}
+
+.timer {
+  flex-shrink: 0;
+  min-width: 58px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: #f0edff;
+  color: #6658e8;
+  font-weight: 800;
+}
+
+.answers {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.answer-button {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #dfe3ee;
+  border-radius: 11px;
+  background: #f8f9fc;
+  color: #252b43;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.answer-button:hover {
+  transform: translateY(-2px);
+  border-color: #8177ff;
+  background: #f1efff;
+}
+
+.final-score {
+  margin: 12px 0;
+  color: #6157ff !important;
+  font-size: clamp(24px, 6vw, 28px);
+  font-weight: 800;
+}
+
+.leaderboard {
+  margin: 20px 0;
+  overflow: hidden;
+  border: 1px solid #e2e5ee;
+  border-radius: 12px;
+}
+
+.leaderboard-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 15px;
+  border-bottom: 1px solid #e7e9f0;
+  background: #fafbfe;
+}
+
+.leaderboard-row span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.leaderboard-row strong {
+  flex-shrink: 0;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-row:nth-child(1) {
+  background: #fff8d8;
+}
+
+.leaderboard-row:nth-child(2) {
+  background: #f2f3f7;
+}
+
+.leaderboard-row:nth-child(3) {
+  background: #fff0e3;
+}
+
+/* =========================
+   ANIMATIONS
+   ========================= */
+
+@keyframes intro-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes joke-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes emoji-bounce {
+  from {
+    transform: translateY(0) rotate(-5deg);
+  }
+
+  to {
+    transform: translateY(-11px) rotate(5deg);
+  }
+}
+
+@keyframes load-real-project {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+  .intro-page,
+  .joke-page,
+  .container {
+    align-items: center;
+    padding: 16px;
+  }
+
+  .fake-todo-card {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .todo-header {
+    align-items: flex-start;
+  }
+
+  .todo-icon {
+    border-radius: 15px;
+  }
+
+  .todo-item:hover {
+    transform: none;
+  }
+
+  .card {
+    padding: 24px 18px;
+  }
+
+  .quiz-header {
+    gap: 10px;
+  }
+}
+
+/* =========================
+   SHORT SCREENS
+   ========================= */
+
+@media (max-height: 700px) {
+  .intro-page,
+  .joke-page,
+  .container {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .fake-todo-card,
+  .joke-content,
+  .card {
+    margin: auto 0;
+  }
+}
+
+/* =========================
+   ACCESSIBILITY
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
